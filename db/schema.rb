@@ -22,21 +22,21 @@ ActiveRecord::Schema.define(version: 20140704110756) do
     t.integer  "author_id"
     t.string   "author_type"
     t.text     "body"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "namespace"
   end
 
   add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
-  add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_admin_notes_on_resource_type_and_resource_id", using: :btree
+  add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
   create_table "answers", force: true do |t|
     t.integer  "question_id"
     t.integer  "user_id"
     t.text     "content"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "workflow_state"
     t.integer  "operator_id"
     t.datetime "deleted_at"
@@ -44,9 +44,7 @@ ActiveRecord::Schema.define(version: 20140704110756) do
 
   add_index "answers", ["deleted_at"], name: "index_answers_on_deleted_at", using: :btree
   add_index "answers", ["operator_id"], name: "index_answers_on_operator_id", using: :btree
-  add_index "answers", ["user_id", "question_id", "deleted_at"], name: "index_answers_on_user_id_and_question_id_and_deleted_at", using: :btree
   add_index "answers", ["user_id", "question_id"], name: "index_answers_on_user_id_and_question_id", using: :btree
-  add_index "answers", ["workflow_state", "deleted_at"], name: "index_answers_on_workflow_state_and_deleted_at", using: :btree
   add_index "answers", ["workflow_state"], name: "index_answers_on_workflow_state", using: :btree
 
   create_table "comments", force: true do |t|
@@ -55,8 +53,8 @@ ActiveRecord::Schema.define(version: 20140704110756) do
     t.integer  "commentable_id"
     t.string   "commentable_type"
     t.integer  "user_id"
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.datetime "deleted_at"
   end
 
@@ -68,8 +66,8 @@ ActiveRecord::Schema.define(version: 20140704110756) do
   create_table "groups", force: true do |t|
     t.string   "name"
     t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.datetime "deleted_at"
   end
 
@@ -86,8 +84,8 @@ ActiveRecord::Schema.define(version: 20140704110756) do
   create_table "questions", force: true do |t|
     t.string   "title"
     t.text     "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "group_id"
     t.datetime "deleted_at"
   end
@@ -101,7 +99,7 @@ ActiveRecord::Schema.define(version: 20140704110756) do
     t.boolean "recruited", default: false
   end
 
-  add_index "ready_users", ["user_id", "group_id"], name: "index_ready_users_on_user_id_and_group_id", using: :btree
+  add_index "ready_users", ["user_id", "group_id"], name: "index_ready_users_on_user_id_and_group_id", unique: true, using: :btree
 
   create_table "user_groups", force: true do |t|
     t.integer "user_id"
@@ -119,8 +117,8 @@ ActiveRecord::Schema.define(version: 20140704110756) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "name"
     t.string   "workflow_state"
     t.text     "biography"
@@ -144,7 +142,6 @@ ActiveRecord::Schema.define(version: 20140704110756) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["name"], name: "index_users_on_name", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-  add_index "users", ["workflow_state", "deleted_at"], name: "index_users_on_workflow_state_and_deleted_at", using: :btree
   add_index "users", ["workflow_state"], name: "index_users_on_workflow_state", using: :btree
 
 end
